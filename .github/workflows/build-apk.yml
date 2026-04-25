@@ -1,0 +1,43 @@
+
+name: Build Android APK
+
+on:
+  push:
+    branches:
+      - main  # O la rama que uses como principal
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      - name: Instalar JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Instalar dependencias del proyecto
+        run: npm install --legacy-peer-deps
+
+      - name: Construir la aplicación web
+        run: npm run build
+
+      - name: Sincronizar con Capacitor
+        run: npx cap sync
+
+      - name: Construir el APK de depuración (Debug)
+        run: cd android && ./gradlew assembleDebug
+
+      - name: Subir el artefacto (APK)
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-debug.apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
