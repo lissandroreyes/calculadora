@@ -30,6 +30,9 @@ jobs:
       - name: Construir la aplicación web
         run: npm run build
 
+      - name: Añadir plataforma Android
+        run: npx cap add android
+
       - name: Sincronizar con Capacitor
         run: npx cap sync
 
