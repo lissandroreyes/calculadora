@@ -4,7 +4,7 @@ name: Build Android APK
 on:
   push:
     branches:
-      - main  # O la rama que uses como principal
+      - main
 
 jobs:
   build:
@@ -29,9 +29,6 @@ jobs:
 
       - name: Construir la aplicación web
         run: npm run build
-
-      - name: Instalar dependencias de Capacitor
-        run: npm install @capacitor/cli @capacitor/core @capacitor/android
 
       - name: Sincronizar con Capacitor
         run: npx cap sync
