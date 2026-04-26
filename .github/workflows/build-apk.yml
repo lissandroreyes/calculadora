@@ -27,14 +27,14 @@ jobs:
       - name: Instalar dependencias del proyecto
         run: npm install --legacy-peer-deps
 
-      - name: Construir la aplicación web
+      - name: Construir la aplicación web estática
         run: npm run build
 
       - name: Añadir plataforma Android
         run: npx cap add android
 
-      - name: Sincronizar con Capacitor
-        run: npx cap sync
+      - name: Copiar los assets web
+        run: npx cap copy
 
       - name: Construir el APK de depuración (Debug)
         run: cd android && ./gradlew assembleDebug
